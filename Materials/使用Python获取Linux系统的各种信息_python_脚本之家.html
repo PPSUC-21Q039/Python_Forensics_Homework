@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.jb51.net/article/52058.htm -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/auto_dup"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(4).txt"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(5).txt"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(6).txt" id="google_shimpl"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(1)"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(2)"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(3)"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(4)"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(5)"></script><script type="text/javascript" async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(6)"></script>
+
+
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="https://img.jbzj.com/">
+<link rel="dns-prefetch" href="https://icws.jb51.net/">
+<link rel="dns-prefetch" href="https://files.jb51.net/">
+<meta name="applicable-device" content="pc">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform">
+<title>使用Python获取Linux系统的各种信息_python_脚本之家</title>
+<meta name="keywords" content="Python,获取Linux系统信息">
+<meta name="description" content="这篇文章主要介绍了使用Python获取Linux系统的各种信息,例如系统类型、CPU信息、内存信息、块设备等,需要的朋友可以参考下">
+<link rel="alternate" media="only screen and(max-width: 640px)" href="https://m.jb51.net/article/52058.htm">
+<meta http-equiv="mobile-agent" content="format=html5; url=https://m.jb51.net/article/52058.htm">
+<meta http-equiv="mobile-agent" content="format=xhtml; url=https://m.jb51.net/article/52058.htm">
+<script async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/matomo.js.download"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/hm.js.download"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/push.js.download"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/push.js(1).download" id="ttzz"></script><script type="text/javascript">
+    var tougao = "junjie",
+        lmname = "python",
+        suoyin = "no";
+    (function() {
+        if (/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile|Opera Mini/i.test(navigator.userAgent)) {
+            var siteName = window.location.pathname,
+                url = window.location.href;
+            if (url.indexOf("?pc") < 0) {
+                try {
+                    if (typeof siteName !== "undefined") {
+                        window.location.href = "https://m.jb51.net" + siteName
+                    }
+                } catch (e) {}
+            }
+        }
+    })();
+</script>
+<meta name="referrer" content="always">
+<link type="text/css" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/base.css" rel="stylesheet">
+<link type="text/css" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/common.css" rel="stylesheet">
+<link type="text/css" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/viewer.min.css" rel="stylesheet">
+<script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/jquery.min.js.download"></script>
+<script type="text/javascript">
+    if (typeof jQuery == 'undefined') {
+        document.write(unescape("%3Cscript src='/skin/js/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?4e352a80125bc151da14f1e04b8efc002129b24ab6d8d29de966cbd3f43ef099c112ff4abe50733e0ff1e1071a0fdc024b166ea2a296840a50a5288f35e2ca42";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+<script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/functionutf.js.download"></script>
+<style type="text/css">.tipsa_ds{position: relative;display: inline-block;}.tipsa_ds:hover .tipsa_d{width:117px;text-indent: -36px;color:#e9e9e9;right:-9px!important}.tipsa_d{position: absolute;line-height: 1.4;box-sizing: border-box;padding: 0 5px;right:-1.5px!important;bottom:-1px!important;background: rgba(120,120,120,.5);border-radius: 6px 0 0 0;color: #d5d5d5;font-size: 12px;width: 31px;overflow: hidden;transform: scale(0.85);transition:all .3s ease-out;white-space: nowrap;}</style><meta http-equiv="origin-trial" content="A+cA2PUOfIOKAdSDJOW5CP9ZlxONy1yu+hqAq72zUtKw4rLdihqRp6Nui/jUyCyegr+BUtH+C+Elv0ufn05yBQEAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+zsdH3aNZT/bkjT8U/o5ACzyaeNYzTvtoVmwf/KOilfv39pxY2AIsOwhQJv+YnXp98i3TqrQibIVtMWs5UHjgoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AxceVEhIegcDEHqLXFQ2+vPKqzCppoJYsRCZ/BdfVnbM/sUUF2BXV8lwNosyYjvoxnTh2FC8cOlAnA5uULr/zAUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+cA2PUOfIOKAdSDJOW5CP9ZlxONy1yu+hqAq72zUtKw4rLdihqRp6Nui/jUyCyegr+BUtH+C+Elv0ufn05yBQEAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+zsdH3aNZT/bkjT8U/o5ACzyaeNYzTvtoVmwf/KOilfv39pxY2AIsOwhQJv+YnXp98i3TqrQibIVtMWs5UHjgoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AxceVEhIegcDEHqLXFQ2+vPKqzCppoJYsRCZ/BdfVnbM/sUUF2BXV8lwNosyYjvoxnTh2FC8cOlAnA5uULr/zAUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+cA2PUOfIOKAdSDJOW5CP9ZlxONy1yu+hqAq72zUtKw4rLdihqRp6Nui/jUyCyegr+BUtH+C+Elv0ufn05yBQEAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+zsdH3aNZT/bkjT8U/o5ACzyaeNYzTvtoVmwf/KOilfv39pxY2AIsOwhQJv+YnXp98i3TqrQibIVtMWs5UHjgoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AxceVEhIegcDEHqLXFQ2+vPKqzCppoJYsRCZ/BdfVnbM/sUUF2BXV8lwNosyYjvoxnTh2FC8cOlAnA5uULr/zAUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(7).txt"></script><link rel="preload" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt" as="script"><script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(8).txt"></script></head>
+
+<body aria-hidden="false">
+    <!--topTools Start -->
+    <div id="topbar">
+        <div id="wrap">
+            <div class="topbarleft">
+                <a href="https://shequ.jb51.net/" target="_blank">脚本之家社区</a>
+                <a href="http://s.jb51.net/" target="_blank" rel="nofollow">服务器常用软件</a>
+            </div>
+            <div class="fr">
+                <ul>
+                    <li><i class="ico-mobile"></i><a target="_blank" href="https://m.jb51.net/" rel="nofollow">手机版</a></li>
+                    <li><i class="ico-contribute"></i><a href="http://tougao.jb51.net/" rel="nofollow" target="_blank">投稿中心</a></li>
+                    <li id="wxHide"><i class="ico-wechat"></i><a href="javascript:void(0)" target="_blank">关注微信</a>
+                        <div id="wxShow" class="wxHide_box"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/erwm.jpg" alt="扫一扫" width="84" hight="84" data-baiduimageplus-ignore=""></div>
+                    </li>
+                </ul>
+                <!--快捷导航 开始 -->
+                <div class="text_d right" id="navHide">
+                    <a rel="nofollow" href="javascript:void(0);">快捷导航 <i class="arrowright"></i></a>
+                    <div id="navBox" class="nwebnav">
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="https://www.jb51.net/softs/" target="_blank">软件下载</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/softs/android.html" target="_blank">android</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/softs/mac.html" target="_blank">MAC</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/qudong/" target="_blank">驱动下载</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/fonts/" target="_blank">字体下载</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/dll/" target="_blank">DLL</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="https://www.jb51.net/codes/" target="_blank">源码下载</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/codes/php.html" target="_blank">PHP</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/codes/aspnet.html" target="_blank">ASP.NET</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/codes/asp.html" target="_blank">ASP</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/codes/jsp.html" target="_blank">JSP</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="https://www.jb51.net/list/index_84.htm" target="_blank">软件编程</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_85_1.htm" target="_blank">C#</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_134_1.htm" target="_blank">JAVA</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_159_1.htm" target="_blank">C 语言</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_206_1.htm" target="_blank">Delphi</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_233_1.htm" target="_blank">Android</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="https://www.jb51.net/list/index_1.htm" target="_blank">网络编程</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_15_1.htm" target="_blank">PHP</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_21_1.htm" target="_blank">ASP.NET</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_2_1.htm" target="_blank">ASP</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_3_1.htm" target="_blank">JavaScript</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="http://tools.jb51.net/" target="_blank">在线工具</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/tools/cssyasuo.shtml" target="_blank">CSS格式化</a>
+                                    <a rel="nofollow" href="http://tools.jb51.net/tools/js_geshihua.asp" target="_blank">JS格式化</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/tools/html-js.htm" target="_blank">Html转化为Js</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="https://www.jb51.net/list/index_104.htm" target="_blank">数据库</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_112_1.htm" target="_blank">MYSQL</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_113_1.htm" target="_blank">MSSQL</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_154_1.htm" target="_blank">oracle</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_155_1.htm" target="_blank">DB2</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/list/list_252_1.htm" target="_blank">MARIADB</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="https://www.jb51.net/cms/" target="_blank">CMS</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/cms/list411_1.html" target="_blank">PHPCMS</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/cms/list408_1.html" target="_blank">DEDECMS</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/cms/list578_1.html" target="_blank">帝国CMS</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/cms/list419_1.html" target="_blank">WordPress</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="ndeallist clear_fix">
+                            <h4><a rel="nofollow" href="javascript:0;" target="_blank">常用工具</a></h4>
+                            <dl>
+                                <dd>
+                                    <a rel="nofollow" href="https://www.jb51.net/zt/phphuanjing.html" target="_blank">PHP开发工具</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/zt/python.html" target="_blank">python</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/zt/photoshopxz.html" target="_blank">Photoshop</a>
+                                    <a rel="nofollow" href="https://www.jb51.net/bibei/win/index.html" target="_blank">必备软件</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <!--快捷导航 结束 -->
+            </div>
+        </div>
+    </div>
+    <!--topTools end -->
+
+    <div id="header">
+        <!-- Logo start -->
+        <div id="logo"><a href="https://www.jb51.net/"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/logo.gif" title="脚本之家" alt="脚本之家"></a></div>
+        <div class="logom fl"><a href="https://xiaotv.live/gzh37" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/xiaotv430.gif" width="430" height="60"><span class="tipsa_d">广告　商业广告，理性选择</span></a></div>
+        <div class="logor fr"><a href="https://ziyuan.jb51.net/" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ziyuan430.png" width="430" height="60"><span class="tipsa_d">广告　商业广告，理性选择</span></a></div>
+        <!--Logo end -->
+    </div>
+    <!--Logo end -->
+
+    <!-- 导航开始 -->
+    <div id="nav">
+        <ul>
+            <li><a href="https://www.jb51.net/">网站首页</a></li>
+            <li><a href="https://www.jb51.net/web/">网页制作</a></li>
+            <li><a href="https://www.jb51.net/list/index_1.htm">网络编程</a></li>
+            <li><a href="https://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+            <li><a href="https://www.jb51.net/jiaoben/">脚本下载</a></li>
+            <li><a href="https://www.jb51.net/list/index_104.htm">数据库</a></li>
+            <li><a href="https://www.jb51.net/list/list_82_1.htm">服务器</a></li>
+            <li><a href="https://www.jb51.net/books/">电子书籍</a></li>
+            <li><a href="https://www.jb51.net/os/">操作系统</a></li>
+            <li><a href="https://www.jb51.net/yunying/">网站运营</a></li>
+            <li><a href="https://www.jb51.net/pingmian/">平面设计</a></li>
+            <li>
+                <p><i>其它</i><span>
+                        <a href="https://www.jb51.net/media/">媒体动画</a>
+                        <a href="https://www.jb51.net/diannaojichu/">电脑基础</a>
+                        <a href="https://www.jb51.net/hardware/">硬件教程</a>
+                        <a href="https://www.jb51.net/hack/">网络安全</a>
+                    </span></p>
+            </li>
+        </ul>
+    </div>
+    <!--导航结束-->
+
+    <!-- 二级菜单开始 -->
+    <div id="submenu">
+        <div class="subnav clearfix">
+            <ul><li><a href="https://www.jb51.net/list/list_114_1.htm" title="vbs">vbs</a></li>
+<li><a href="https://www.jb51.net/list/list_106_1.htm" title="DOS/BAT">DOS/BAT</a></li>
+<li><a href="https://www.jb51.net/list/list_110_1.htm" title="hta">hta</a></li>
+<li><a href="https://www.jb51.net/list/list_111_1.htm" title="htc">htc</a></li>
+<li><a href="https://www.jb51.net/list/list_97_1.htm" title="python">python</a></li>
+<li><a href="https://www.jb51.net/list/list_125_1.htm" title="perl">perl</a></li>
+<li><a href="https://www.jb51.net/list/list_138_1.htm" title="游戏相关">游戏相关</a></li>
+<li><a href="https://www.jb51.net/list/list_161_1.htm" title="VBA">VBA</a></li>
+<li><a href="https://www.jb51.net/list/list_163_1.htm" title="远程脚本">远程脚本</a></li>
+<li><a href="https://www.jb51.net/list/list_178_1.htm" title="ColdFusion">ColdFusion</a></li>
+<li><a href="https://www.jb51.net/list/list_201_1.htm" title="ruby专题">ruby专题</a></li>
+<li><a href="https://www.jb51.net/list/list_213_1.htm" title="autoit">autoit</a></li>
+<li><a href="https://www.jb51.net/list/list_214_1.htm" title="seraphzone">seraphzone</a></li>
+<li><a href="https://www.jb51.net/list/list_234_1.htm" title="PowerShell">PowerShell</a></li>
+<li><a href="https://www.jb51.net/list/list_235_1.htm" title="linux shell">linux shell</a></li>
+<li><a href="https://www.jb51.net/list/list_245_1.htm" title="Lua">Lua</a></li>
+<li><a href="https://www.jb51.net/list/list_246_1.htm" title="Golang">Golang</a></li>
+<li><a href="https://www.jb51.net/list/list_249_1.htm" title="Erlang">Erlang</a></li>
+<li><a href="https://www.jb51.net/list/list_130_1.htm" title="其它">其它</a></li>
+</ul>
+        </div>
+    </div>
+    <!-- 二级菜单结束 -->
+
+    <!--content Star -->
+    <div id="wrapper" style="height: auto !important;">
+        <div id="container" style="height: auto !important;">
+            <div class="pt10 clearfix">
+                <div class="clearfix"><div class="mainlr"><a href="https://www.cloudfly2022.com/" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/fy1200-3.gif" alt="" width="1200" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></div><div class="blank5"></div><div class="mainlr"><a href="https://click.ctyun.cn/?track=source_jiaobenzhijia-medium_cps-content_se337038" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ctyun1200-0915.gif" alt="" width="1200" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></div><div class="blank5"></div><div class="topimg"><ul><li><a href="https://www.8a.hk/act/cvm" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/8ahk_235.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="https://www.jb51.net/service/" target="_blank" class="umami--click--services-235 tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/services.png" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="http://github.crmeb.net/u/jiaobenzhijia" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/crmeb235.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="http://www.ku86.com/" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/jieidc_237.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="tencent://message/?uin=461478385&amp;Site=//www.jb51.net" target="_blank"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/daqz235.jpg" width="235" data-nt="1" height="50"></a></li></ul></div><div class="blank5"></div><div id="txtlink"><ul><li><a href="https://www.redidc.net/" target="_blank"><span style="color: red;">红队云|可试用|海外原生IP|免备极速安全稳定</span></a></li><li><a href="tencent://message/?uin=461478385&amp;Site=//www.jb51.net" target="_blank"><span style="color: red;">广告联系QQ461478385</span></a></li><li><a href="http://go.yitanyun.com/url/51jbwz/" target="_blank"><span style="color: red;">█易探云·香港/国内vps仅19元█</span></a></li><li><a href="https://www.zndata.com/activity/" target="_blank"><span style="color: red;">██海外站群 高防 10WIP大带宽服务器 纵横数据██</span></a></li><li><a href="http://www.boluoyun.com/" target="_blank"><span style="color: blue;">【菠萝云】来了,【正规商家】香港4G内存99元</span></a></li><li><a href="https://www.cloudfly79.com/" target="_blank"><span style="color: blue;">【飞云CDN】海内外老牌，高速,高防,高命中</span></a></li><li><a href="http://www.hostspaceidc.com/front/products/datacenter?from=jb51-pic" target="_blank"><span style="color: blue;">海外大带宽 站群 高防服务器</span></a></li><li><a href="https://s.jb51.net/" target="_blank"><span style="color: blue;">服务器常用软件</span></a></li><li><a href="https://www.wsisp.com/cloud.html" target="_blank"><span style="color: red;">香港CN2云主机★29元/月</span></a></li><li><a href="http://www.qy.com.cn/" target="_blank"><span style="color: red;">群英云服务器送10M带宽30G防御,49元起</span></a></li><li><a href="http://www.tuidc.com/" target="_blank"><span style="color: red;">服务器租用/托管-域名空间/认准腾佑科技</span></a></li><li><a href="http://www.vzidc.com/cloud/" target="_blank"><span style="color: red;">华为云4核8g限时免费送另有代金券免费送</span></a></li><li><a href="http://www.ushk.net/server.html" target="_blank"><span style="color: blue;">██美港数据██高端香港服务器租用</span></a></li><li><a href="http://vps.zzidc.com/tongji/jb51w.html" target="_blank"><span style="color: blue;">★☆云服务器5折，天天抽红包抵扣☆★</span></a></li><li><a href="https://www.7e.hk/server/buy.html" target="_blank"><span style="color: blue;">香港云服务器●10M独享带宽38元</span></a></li><li><a href="https://www.dzisp.cn/" target="_blank"><span style="color: blue;">成都|德阳|电信100G高防24核物理机500元</span></a></li><li><a href="http://www.pppoevps.com/" target="_blank"><span style="color: red;">█动态拨号IP云主机，电信ADSL独享20M█ </span></a></li><li><a href="http://www.360jq.com/hkshuang.htm" target="_blank"><span style="color: red;">[香港双高防]无视CC★DDOS/堪比广东！</span></a></li><li><a href="http://www.cyidc.cc/" target="_blank"><span style="color: red;">畅游网络 百独服务器 包跑满 998元</span></a></li><li><a href="http://www.wdw6.com/" target="_blank"><span style="color: red;">bgp多线机房、大带宽</span></a></li><li><a href="http://www.ssf.cc/" target="_blank"><span style="color: blue;">免备vps20/百独799/双线350/45互联</span></a></li><li><a href="http://www.zitian.cn/" target="_blank"><span style="color: blue;">中原地区核心数据中心，月付299元起</span></a></li><li><a href="http://www.qy.cn/gfhd.html" target="_blank"><span style="color: blue;">██群英网络██◆◆◆300G高防仅需599元◆◆◆</span></a></li><li><a href="https://www.zj-idc.com/" target="_blank"><span style="color: blue;">上云就选华晨云，每天最低仅需1.2元</span></a></li><li><a href="http://www.gwidc.com/rent/home/index.html" target="_blank"><span style="color: red;">港湾网络徐州百独800/月,100G高防云150</span></a></li><li><a href="http://www.hkcn2.com/51.htm" target="_blank"><span style="color: red;">**香港高防10m大带宽独服，低至999元**</span></a></li><li><a href="http://www.xiaozhiyun.com/2016/" target="_blank"><span style="color: red;">韩国香港美国站群服务器 巨牛网络</span></a></li><li><a href="tencent://message/?uin=461478385&amp;Site=//www.jb51.net" target="_blank"><span style="color: red;">广告联系QQ461478385</span></a></li></ul><div class="clearfix"></div></div><div class="blank5"></div><div class="topimg"><ul><li><a href="https://www.hncloud.com/activity_register.html?p=jb51&amp;register" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/huana235_331.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="http://51.renrenjiji.com/" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/gkcnvnj235.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="https://www.guowaiwangzhuan.com/wenjuan/" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/wj235.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="https://www.henghost.com/coupons.shtml?s=zz&amp;jb51" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/hc235-50.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li><li><a href="https://www.zndata.com/dedicatedserver/" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/zoneidc235.gif" width="235" height="50"><span class="tipsa_d">广告　商业广告，理性选择</span></a></li></ul></div><div class="blank5"></div></div>
+            </div>
+
+            <div class="clearfix">
+                <div class="breadcrumb">
+                    <i class="ico-path"></i>您的位置：<a href="https://www.jb51.net/">首页</a> → <a href="https://www.jb51.net/list/index_96.htm" title="脚本专栏">脚本专栏</a> → <a href="https://www.jb51.net/list/list_97_1.htm" title="python">python</a> → Python获取Linux系统信息
+                </div>
+                <div class="search">
+                    <form action="https://www.jb51.net/do/search.php" target="_blank">
+                        <input type="hidden" name="s" value="10520733385329581432">
+                        <input type="hidden" name="ie" value="utf-8">
+                        <input type="text" name="q" class="searchinput" placeholder="请输入关键词">
+                        <input type="submit" value=" " class="search-button">
+                    </form>
+                </div>
+            </div>
+
+            <div id="main" class="clearfix" style="height: auto !important;">
+                <div class="main-left" style="height: auto !important;">
+                    <div id="article" style="height: auto !important;">
+                        <h1 class="title">使用Python获取Linux系统的各种信息</h1>
+                        <div class="info"> &nbsp;更新时间：2014年07月10日 10:55:04 &nbsp; 投稿：junjie &nbsp; </div>
+                        <div class="lbd clearfix"></div>
+                        <div class="summary">这篇文章主要介绍了使用Python获取Linux系统的各种信息,例如系统类型、CPU信息、内存信息、块设备等,需要的朋友可以参考下</div>
+                        <div class="lbd clearfix"><script async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(9).txt"></script><ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-6384567588307613" data-ad-slot="3921475131" data-ad-format="auto" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_1_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 280px; width: 820px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:820px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="820" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads.html" data-google-container-id="a!2" data-google-query-id="CJz_rvaEnPoCFW3p5wMdA5QBHw" data-load-complete="true"></iframe></div></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                        <div id="content" style="height: auto !important;">
+                            <p>在本文中，我们将会探索使用Python编程语言工具来检索Linux系统各种信息。走你。</p>
+<p><strong>哪个Python版本?</strong></p>
+<p>当我提及Python，所指的就是CPython 2(准确的是2.7).我会显式提醒那些相同的代码在CPython 3 (3.3)上是不工作的，以及提供一份解释不同之处的备选代码。请确保你已经安装了CPython,在终端上输入python或者python3回车，然后你在终端上应该能看到python的提示符(prompt)。</p>
+<p>请注意，所有的程序在它们第一行都是#!/usr/bin/env/python，也就是说，我们想要Python的解释器来执行这些脚本。因此，如果你想你的脚本具有执行性，请使用chmod +x your-script.py， 那么你就可以使用./your-script.py来执行它了（在本文中你将会看到这种方式）</p>
+<p><strong>探索platform模块</strong></p>
+<p>platform模块在标准库中，它有很多运行我们获得众多系统信息的函数。让我们运行Python解释器来探索它们中的一些函数，那就从platform.uname()函数开始吧：<br>
+</p><div class="codetitle"><span><a data="97556" class="copybut" id="copybut97556"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code97556"><br>
+&gt;&gt;&gt; import platform<br>
+&gt;&gt;&gt; platform.uname()<br>
+('Linux', 'fedora.echorand', '3.7.4-204.fc18.x86_64', '#1 SMP Wed Jan 23 16:44:29 UTC 2013', 'x86_64')<br>
+</div><p></p>
+<p>如果你已知道linux上的uname命令，那么你就会认出来这个函数就是这个命令的一个接口。在Python 2上，它会返回一个包含系统类型(或者内核版本)，主机名，版本，发布版本，机器的硬件以及处理器信息元组(tuple)。你可以使用下标访问个别属性，像这样：<br>
+</p><div class="codetitle"><span><a data="89270" class="copybut" id="copybut89270"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code89270"><br>
+&gt;&gt;&gt; platform.uname()[0]<br>
+'Linux'<br>
+</div><br>
+在Python 3上，这个函数返回的是一个命名元组：<br>
+<div class="codetitle"><span><a data="67244" class="copybut" id="copybut67244"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code67244"><br>
+&gt;&gt;&gt; platform.uname()<p></p>
+<p>uname_result(system='Linux', node='fedora.echorand',<br>
+release='3.7.4-204.fc18.x86_64', version='#1 SMP Wed Jan 23 16:44:29<br>
+UTC 2013', machine='x86_64', processor='x86_64')<br>
+</p></div><p></p>
+<p>因为返回结果是一个命名元组，这就可以简单地通过名字来指定特定的属性，而不是必须记住下标，像这样：<br>
+</p><div class="codetitle"><span><a data="6765" class="copybut" id="copybut6765"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code6765"><br>
+&gt;&gt;&gt; platform.uname().system<br>
+'Linux'<br>
+</div><p></p>
+<p>platform模块还有一些上面属性的直接接口，像这样：</p>
+<p></p><div class="codetitle"><span><a data="88202" class="copybut" id="copybut88202"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code88202"><br>
+&gt;&gt;&gt; platform.system()<br>
+'Linux'<p></p>
+<p>&gt;&gt;&gt; platform.release()<br>
+'3.7.4-204.fc18.x86_64'<br>
+</p></div><p></p>
+<p>linux_distribution()函数返回的有关你所在的linux发布版本的详细信息。例如，在Fedora 18系统上，这个命令会返回如下信息：<br>
+</p><div class="codetitle"><span><a data="70448" class="copybut" id="copybut70448"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code70448"><br>
+&gt;&gt;&gt; platform.linux_distribution()<br>
+('Fedora', '18', 'Spherical Cow')<br>
+</div><p></p>
+<p>这个返回结果中包含了版本发布名，版本以及代号元组。特定的Python版本支持的发布版本上可以通过_supported_dists显示的值获得。<br>
+</p><div class="codetitle"><span><a data="97152" class="copybut" id="copybut97152"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code97152"><br>
+&gt;&gt;&gt; platform._supported_dists<br>
+('SuSE', 'debian', 'fedora', 'redhat', 'centos', 'mandrake',<br>
+'mandriva', 'rocks', 'slackware', 'yellowdog', 'gentoo',<br>
+'UnitedLinux', 'turbolinux')<br>
+</div><p></p>
+<p>如果你的linux发布版本不在其中（或者其中之一的衍生发行版）。那么你很可能调用了上面这个函数而看不到任何有用的信息。<br>
+platform模块的最后一个函数，我们将会看看architecture()函数。当你无参的调用这个函数，它会返回包含架构位数以及python可执行的格式的元组，像这样：<br>
+</p><div class="codetitle"><span><a data="17042" class="copybut" id="copybut17042"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code17042"><br>
+&gt;&gt;&gt; platform.architecture()<br>
+('64bit', 'ELF')<br>
+</div><p></p>
+<p>在32位的系统上，你将会看到：<br>
+</p><div class="codetitle"><span><a data="83930" class="copybut" id="copybut83930"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code83930"><br>
+&gt;&gt;&gt; platform.architecture()<br>
+('32bit', 'ELF')<br>
+</div><p></p>
+<p>如果你指定了系统上其他任何可执行的，你都将会获得相似的结果，如同这样：</p>
+<p></p><div class="codetitle"><span><a data="83266" class="copybut" id="copybut83266"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code83266"><br>
+&gt;&gt;&gt; platform.architecture(executable='/usr/bin/ls')<br>
+('64bit', 'ELF')<br>
+</div><p></p>
+<p>鼓励探索platform模块的除了这些的其它函数，找出你现在运行的Python版本。如果你想知道这个模块是如何获取这些信息的，你可以深入查看PYthon源码目录下的Lib/platform.py文件。</p>
+<p>os和sys模块也可以获得一些系统属性，例如原生的字节序。接下来，我们超越Python标准库模块，去探索一些在linux系统通过proc和sysfs文件系统使之访问信息成为可能。注意的是通过文件系统来访问信息将会在不同的硬件架构有所不同。所以在读本文或是写脚本时要时刻记住可以试图从这些文件获取信息。</p>
+<p><strong>获取CPU信息</strong></p>
+<p>/proc/cpuinfo文件包含了你的系统处理器单元的信息。例如，这里就是python版的linux命令cat /proc/cpuinfo所做的事：<br>
+</p><div class="codetitle"><span><a data="2321" class="copybut" id="copybut2321"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code2321"><br>
+#! /usr/bin/env python<br>
+""" print out the /proc/cpuinfo<br>
+&nbsp;&nbsp;&nbsp; file<br>
+"""<p></p>
+<p>from __future__ import print_function</p>
+<p>with open('/proc/cpuinfo') as f:<br>
+&nbsp;&nbsp;&nbsp; for line in f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print(line.rstrip('\n'))<br>
+</p></div><p></p>
+<p>当你使用Python 2 或者 Python 3执行这个程序时，你会在屏幕上看到所有/proc/cpuinfo的内容（在上面的程序里，rstrip()方法用来删除每行末尾的换行符）<br>
+在下面的代码里列举了使用startwith()字符串方法来显示你的处理器单元的模式。<br>
+</p><div class="codetitle"><span><a data="76022" class="copybut" id="copybut76022"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code76022"><br>
+#! /usr/bin/env python<p></p>
+<p>""" Print the model of your <br>
+&nbsp;&nbsp;&nbsp; processing units</p>
+<p>"""</p>
+<p>from __future__ import print_function</p>
+<p>with open('/proc/cpuinfo') as f:<br>
+&nbsp;&nbsp;&nbsp; for line in f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Ignore the blank line separating the information between<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # details about two processing units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line.strip():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line.rstrip('\n').startswith('model name'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; model_name = line.rstrip('\n').split(':')[1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print(model_name)<br>
+</p></div><p></p>
+<p>当你运行这个程序后，你应该会看到你的每个处理器单元的模式名。例如，这里就是在我电脑上所看到的。</p>
+<p></p><div class="codetitle"><span><a data="28360" class="copybut" id="copybut28360"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code28360"><br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+</div><p></p>
+<p>迄今为止，我们已有两种方式来找出我们所使用的系统的架构。从技术上讲是正确的，两个方式实际上报告了你系统运行的内核架构，所以，如果你的电脑是64位的，但是运行的是32位的内核，然后上面的方法还是将会显示为32位的架构。你可以通过从/proc/cpuinfo所列举的标志中查找lm标志，来找到你的电脑的真实的架构。lm标志代表了长模式，只有64位架构的才会显示它。下面的程序将会指导你怎样做：<br>
+</p><div class="codetitle"><span><a data="71345" class="copybut" id="copybut71345"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code71345"><br>
+#! /usr/bin/env python<p></p>
+<p>""" Find the real bit architecture<br>
+"""</p>
+<p>from __future__ import print_function</p>
+<p>with open('/proc/cpuinfo') as f:<br>
+&nbsp;&nbsp;&nbsp; for line in f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Ignore the blank line separating the information between<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # details about two processing units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line.strip():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line.rstrip('\n').startswith('flags') \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or line.rstrip('\n').startswith('Features'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if 'lm' in line.rstrip('\n').split():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('64-bit')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('32-bit')<br>
+</p></div><p></p>
+<p>如我们所看到那样，读取/proc/cpuinfo文件以及使用简单文本处理技术就可以获得我们要查找的数据是可能的。为了给其他程序更好的使用这些数据，一个更好的主意就是使/proc/cpuinfo的内容成为标准的数据结构，譬如字典(dictionary)。这个注意很简单：如果你查看这个文件的内容，你就会发现对于每个处理器单元，都有好些键值对(在先前的例子中，我们打印了每个处理器的模型名，即模型名就是关键字)。不同的处理器单元的信息可以使用空白行隔开。构造一个字典数据结构包含每个处理器单元的关键字是很简单的。对于每个关键字，对于处理器单元的值都在/proc/cpuinfo文件中。下面的代码将会指导你怎么做。<br>
+</p><div class="codetitle"><span><a data="95507" class="copybut" id="copybut95507"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code95507"><br>
+#!/usr/bin/env/ python<p></p>
+<p>"""<br>
+/proc/cpuinfo as a Python dict<br>
+"""<br>
+from __future__ import print_function<br>
+from collections import OrderedDict<br>
+import pprint</p>
+<p>def cpuinfo():<br>
+&nbsp;&nbsp;&nbsp; ''' Return the information in /proc/cpuinfo<br>
+&nbsp;&nbsp;&nbsp; as a dictionary in the following format:<br>
+&nbsp;&nbsp;&nbsp; cpu_info['proc0']={...}<br>
+&nbsp;&nbsp;&nbsp; cpu_info['proc1']={...}</p>
+<p>&nbsp;&nbsp;&nbsp; '''</p>
+<p>&nbsp;&nbsp;&nbsp; cpuinfo=OrderedDict()<br>
+&nbsp;&nbsp;&nbsp; procinfo=OrderedDict()</p>
+<p>&nbsp;&nbsp;&nbsp; nprocs = 0<br>
+&nbsp;&nbsp;&nbsp; with open('/proc/cpuinfo') as f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for line in f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if not line.strip():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # end of one processor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cpuinfo['proc%s' % nprocs] = procinfo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nprocs=nprocs+1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Reset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; procinfo=OrderedDict()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if len(line.split(':')) == 2:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; procinfo[line.split(':')[0].strip()] = line.split(':')[1].strip()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; procinfo[line.split(':')[0].strip()] = ''<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; return cpuinfo</p>
+<p>if __name__=='__main__':<br>
+&nbsp;&nbsp;&nbsp; cpuinfo = cpuinfo()<br>
+&nbsp;&nbsp;&nbsp; for processor in cpuinfo.keys():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print(cpuinfo[processor]['model name'])<br>
+</p></div><p></p>
+<p>这段代码中使用了OrderedDict(有序字典)而不是常规的字典，能够使用键值有序的存储在文件里。所以，第一个处理器单元的数据之后就是第二个处理器单元的数据，以此类推。你可以使用过滤器来过滤你所查找的信息（如同在if __name__ == '__main__'块中演示的那样）。上面的程序每次执行后都会打印每个处理器单元的模型名（如通过cpuinfo[processor]['model name']语句表明的那样）<br>
+</p><div class="codetitle"><span><a data="28360" class="copybut" id="copybut28360"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code28360"><br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz<br>
+</div><p></p>
+<p><strong>获取内存信息</strong></p>
+<p>和/proc/cpuinfo相似，文件/proc/meminfo包含了你电脑的主存的信息。下面的这个程序创建了一个使用这个文件的内容填充的字典。</p>
+<p></p><div class="codetitle"><span><a data="87367" class="copybut" id="copybut87367"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code87367"><br>
+#!/usr/bin/env python<p></p>
+<p>from __future__ import print_function<br>
+from collections import OrderedDict</p>
+<p>def meminfo():<br>
+&nbsp;&nbsp;&nbsp; ''' Return the information in /proc/meminfo<br>
+&nbsp;&nbsp;&nbsp; as a dictionary '''<br>
+&nbsp;&nbsp;&nbsp; meminfo=OrderedDict()</p>
+<p>&nbsp;&nbsp;&nbsp; with open('/proc/meminfo') as f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for line in f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; meminfo[line.split(':')[0]] = line.split(':')[1].strip()<br>
+&nbsp;&nbsp;&nbsp; return meminfo</p>
+<p>if __name__=='__main__':<br>
+&nbsp;&nbsp;&nbsp; #print(meminfo())<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; meminfo = meminfo()<br>
+&nbsp;&nbsp;&nbsp; print('Total memory: {0}'.format(meminfo['MemTotal']))<br>
+&nbsp;&nbsp;&nbsp; print('Free memory: {0}'.format(meminfo['MemFree']))<br>
+</p></div><p></p>
+<p style="background-color: rgb(1, 3, 44); text-align: center; padding: 0px; margin: 20px 0px;"><a href="https://www.apeclass.com/?did=15" class="umami--click--apeclass-img" target="_blank"><img style="border:none;padding:0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ape820.png" alt="自媒体培训"></a></p><p><br>
+像先前的，通过它的关键字，你可以访问任何你查询的指定信息(在if __name__==__main__块中有所表示)。当你执行这个程序，你该会看到像下面类似的输出：</p>
+<p></p><div class="codetitle"><span><a data="20884" class="copybut" id="copybut20884"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code20884"><br>
+Total memory: 7897012 kB<br>
+Free memory: 249508 kB<br>
+</div><p></p>
+<p><strong>网络统计信息</strong></p>
+<p>接下来，我们会探索我们电脑系统的网络设备。我们将会获得系统的网络接口，以及当系统重启之后通过它们数据发送和接受数据的信息。 /proc/net/dev文件让这些信息可用。如果你检查了这个文件的内容，你就会注意到头一两行包含了头信息等等，这个文件第一列是网络接口名，第二和第三列显示了接收和发送的字节数信息（例如总发送字节数，包数，错误等等）。这里我们所感兴趣的就是他哦难过不同的网络设备提取出总发送数据和接收数据。下面的代码展示了怎么从/proc/net/dev文件中提取出这些信息。<br>
+</p><div class="codetitle"><span><a data="93776" class="copybut" id="copybut93776"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code93776"><br>
+#!/usr/bin/env python<br>
+from __future__ import print_function<br>
+from collections import namedtuple<p></p>
+<p>def netdevs():<br>
+&nbsp;&nbsp;&nbsp; ''' RX and TX bytes for each of the network devices '''</p>
+<p>&nbsp;&nbsp;&nbsp; with open('/proc/net/dev') as f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; net_dump = f.readlines()<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; device_data={}<br>
+&nbsp;&nbsp;&nbsp; data = namedtuple('data',['rx','tx'])<br>
+&nbsp;&nbsp;&nbsp; for line in net_dump[2:]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line = line.split(':')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line[0].strip() != 'lo':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; device_data[line[0].strip()] = data(float(line[1].split()[0])/(1024.0*1024.0), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float(line[1].split()[8])/(1024.0*1024.0))<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; return device_data</p>
+<p>if __name__=='__main__':<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; netdevs = netdevs()<br>
+&nbsp;&nbsp;&nbsp; for dev in netdevs.keys():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('{0}: {1} MiB {2} MiB'.format(dev, netdevs[dev].rx, netdevs[dev].tx)) <br>
+</p></div><p></p>
+<p>当你运行上面的程序，下面这个输出就会显示从你最近重启之后网络设备总接收和发送的数据，单位为兆。</p>
+<p></p><div class="codetitle"><span><a data="1657" class="copybut" id="copybut1657"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code1657"><br>
+em1: 0.0 MiB 0.0 MiB<br>
+wlan0: 2651.40951061 MiB 183.173976898 MiB<br>
+</div><p></p>
+<p>你可以使用持久的数据存储机制来连接，来写出自己的数据使用监控程序。</p>
+<p><strong>进程信息</strong></p>
+<p>/proc目录包含了所有正运行的进程目录。这些目录的名字和进程的标识符是一样的。所以，如果你遍历/proc目录下那些使用数字作为它们的名字的目录，你就会获得所有现在正在运行的进程列表。在下面的代码中process_list()函数返回所有现在正在运行的进程的标识符列表。当你执行这个程序后，这个列表的长度就是在系统上运行的总进程数。<br>
+</p><div class="codetitle"><span><a data="51455" class="copybut" id="copybut51455"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code51455"><br>
+#!/usr/bin/env python<br>
+"""<br>
+&nbsp;List of all process IDs currently active<br>
+"""<p></p>
+<p>from __future__ import print_function<br>
+import os<br>
+def process_list():</p>
+<p>&nbsp;&nbsp;&nbsp; pids = []<br>
+&nbsp;&nbsp;&nbsp; for subdir in os.listdir('/proc'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if subdir.isdigit():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pids.append(subdir)</p>
+<p>&nbsp;&nbsp;&nbsp; return pids</p>
+<p><br>
+if __name__=='__main__':</p>
+<p>&nbsp;&nbsp;&nbsp; pids = process_list()<br>
+&nbsp;&nbsp;&nbsp; print('Total number of running processes:: {0}'.format(len(pids)))<br>
+</p></div><p></p>
+<p>上面的程序当执行后会显示和下面类似的输出：<br>
+</p><div class="codetitle"><span><a data="28620" class="copybut" id="copybut28620"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code28620">Total number of running processes:: 229</div><br>
+每个进程目录包含了一些其他文件和目录，如进程命令的调用，它正使用的共享库以及其它的。<p></p>
+<p><strong>块设备</strong></p>
+<p>下一个程序通过读sysfs虚拟文件系统列出所有块设备。你系统中的块设备可以从/sys/block目录中找到。因此可能会有/sys/block/sda、/sys/block/sdb等这样的目录。为了获取所有这些设备，我们使用正则表达式对/sys/block目录进行扫描提取感兴趣的块设备。</p>
+<p></p><div class="codetitle"><span><a data="23683" class="copybut" id="copybut23683"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code23683"><br>
+#!/usr/bin/env python<p></p>
+<p>"""<br>
+Read block device data from sysfs<br>
+"""</p>
+<p>from __future__ import print_function<br>
+import glob<br>
+import re<br>
+import os</p>
+<p># Add any other device pattern to read from<br>
+dev_pattern = ['sd.*','mmcblk*']</p>
+<p>def size(device):<br>
+&nbsp;&nbsp;&nbsp; nr_sectors = open(device+'/size').read().rstrip('\n')<br>
+&nbsp;&nbsp;&nbsp; sect_size = open(device+'/queue/hw_sector_size').read().rstrip('\n')</p>
+<p>&nbsp;&nbsp;&nbsp; # The sect_size is in bytes, so we convert it to GiB and then send it back<br>
+&nbsp;&nbsp;&nbsp; return (float(nr_sectors)*float(sect_size))/(1024.0*1024.0*1024.0)</p>
+<p>def detect_devs():<br>
+&nbsp;&nbsp;&nbsp; for device in glob.glob('/sys/block/*'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for pattern in dev_pattern:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if re.compile(pattern).match(os.path.basename(device)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('Device:: {0}, Size:: {1} GiB'.format(device, size(device)))</p>
+<p>if __name__=='__main__':<br>
+&nbsp;&nbsp;&nbsp; detect_devs()<br>
+</p></div><p></p>
+<p>如果你运行该程序，你将会看到下述类似的输出：</p>
+<p></p><div class="codetitle"><span><a data="11934" class="copybut" id="copybut11934"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code11934"><br>
+Device:: /sys/block/sda, Size:: 465.761741638 GiB<br>
+Device:: /sys/block/mmcblk0, Size:: 3.70703125 GiB<br>
+</div><p></p>
+<p>当我运行该程序的时候，有个SD内存卡插在电脑上，因此你会看到程序检测到了它。你也可以扩展该程序识别其它块设备（比如虚拟硬盘）。</p>
+<p><strong>建立命令行实用工具</strong></p>
+<p>linux中命令行使用工具是无所不在的[@Lesus 注：曾有人说过：linux没有了命令行就是个渣。]，它允许人么指定命令行参数来定制程序的默认行为。argparse模块就提供了和linux命令行实用工具类似的接口。下面的代码展示了程序如何获得系统上的所有用户以及打印它们的登录shell(使用了pwd标准库模块)：<br>
+</p><div class="codetitle"><span><a data="47182" class="copybut" id="copybut47182"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code47182"><br>
+#!/usr/bin/env python<p></p>
+<p>"""<br>
+Print all the users and their login shells<br>
+"""</p>
+<p>from __future__ import print_function<br>
+import pwd</p>
+<p><br>
+# Get the users from /etc/passwd<br>
+def getusers():<br>
+&nbsp;&nbsp;&nbsp; users = pwd.getpwall()<br>
+&nbsp;&nbsp;&nbsp; for user in users:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('{0}:{1}'.format(user.pw_name, user.pw_shell))</p>
+<p>if __name__=='__main__':<br>
+&nbsp;&nbsp;&nbsp; getusers()<br>
+</p></div><p></p>
+<p>当运行这个程序之后，它会打印系统上所有的用户以及他们登录shell名。<br>
+现在，你想要程序的用户能够选择是否想看系统用户(像daemon, apache)。我们扩展前面的代码，第一次使用argparse模块来实现这个特性，如下。</p>
+<p></p><div class="codetitle"><span><a data="41437" class="copybut" id="copybut41437"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code41437"><br>
+#!/usr/bin/env python<p></p>
+<p>"""<br>
+Utility to play around with users and passwords on a Linux system<br>
+"""</p>
+<p>from __future__ import print_function<br>
+import pwd<br>
+import argparse<br>
+import os</p>
+<p>def read_login_defs():</p>
+<p>&nbsp;&nbsp;&nbsp; uid_min = None<br>
+&nbsp;&nbsp;&nbsp; uid_max = None</p>
+<p>&nbsp;&nbsp;&nbsp; if os.path.exists('/etc/login.defs'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with open('/etc/login.defs') as f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; login_data = f.readlines()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for line in login_data:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line.startswith('UID_MIN'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uid_min = int(line.split()[1].strip())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line.startswith('UID_MAX'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uid_max = int(line.split()[1].strip())</p>
+<p>&nbsp;&nbsp;&nbsp; return uid_min, uid_max</p>
+<p># Get the users from /etc/passwd<br>
+def getusers(no_system=False):</p>
+<p>&nbsp;&nbsp;&nbsp; uid_min, uid_max = read_login_defs()</p>
+<p>&nbsp;&nbsp;&nbsp; if uid_min is None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uid_min = 1000<br>
+&nbsp;&nbsp;&nbsp; if uid_max is None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uid_max = 60000</p>
+<p>&nbsp;&nbsp;&nbsp; users = pwd.getpwall()<br>
+&nbsp;&nbsp;&nbsp; for user in users:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if no_system:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if user.pw_uid &gt;= uid_min and user.pw_uid &lt;= uid_max:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('{0}:{1}'.format(user.pw_name, user.pw_shell))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('{0}:{1}'.format(user.pw_name, user.pw_shell))</p>
+<p>if __name__=='__main__':</p>
+<p>&nbsp;&nbsp;&nbsp; parser = argparse.ArgumentParser(description='User/Password Utility')</p>
+<p>&nbsp;&nbsp;&nbsp; parser.add_argument('--no-system', action='store_true',dest='no_system',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default = False, help='Specify to omit system users')</p>
+<p>&nbsp;&nbsp;&nbsp; args = parser.parse_args()<br>
+&nbsp;&nbsp;&nbsp; getusers(args.no_system)<br>
+</p></div><p></p>
+<p>使用--help选项执行上面的程序，你会看到友好的帮助信息：可选项以及它们的作用。</p>
+<p></p><div class="codetitle"><span><a data="85231" class="copybut" id="copybut85231"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code85231"><br>
+$ ./getusers.py --help<br>
+usage: getusers.py [-h] [--no-system]<p></p>
+<p>User/Password Utility</p>
+<p>optional arguments:<br>
+&nbsp; -h, --help&nbsp;&nbsp; show this help message and exit<br>
+&nbsp; --no-system&nbsp; Specify to omit system users<br>
+</p></div><p></p>
+<p>上面程序使用的一个例子，如下所示：</p>
+<p></p><div class="codetitle"><span><a data="27292" class="copybut" id="copybut27292"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code27292"><br>
+$ ./getusers.py --no-system<br>
+gene:/bin/bash<br>
+</div><p></p>
+<p>当你传入一个非法的参数，这个程序就会发牢骚(报错)<br>
+</p><div class="codetitle"><span><a data="74549" class="copybut" id="copybut74549"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code74549"><br>
+$ ./getusers.py --param<br>
+usage: getusers.py [-h] [--no-system]<br>
+getusers.py: error: unrecognized arguments: --param<br>
+</div><p></p>
+<p>在上面的程序中，我们简单的理解了如何使用argparse模块。parser = argparse.ArgumentParser(description="User/Password Utility")语句创建了一个带说明程序是做什么的可选描述的ArgumentParser对象，<br>
+然后,我们添加参数。我们想要程序能够识别接下来这条语句 add_argument()。</p>
+<p>parser.add_argument('--no-system', action='store_true', dest='no_system', default = False, help='Specify to omit system users')。第一个方法的参数是当系统调用这个程序,程序使用着将要提供这个参数的名称,接下来的参数acton=store_true表明它是一个布尔选择。那就是说,它真或假影响程序的某些行为。dest为可定制化参数,它的值可以提供给程序使用。假如这个值用户不提供,这个值默认false。最后的参数程序显示的帮助信息。最后,参数被解析通过args=parser.parse_args()方法。一旦解析方法被做,用户选项的值能够被抓取到通过相应的语法参数option_dest,当你配置参数的时候,option_dest是一个你指定的目的变量。getusers(args.no_system)这条语句使用用户提供参数的值将会回调getusers()方法。</p><div class="google-auto-placed ap_container" style="width: 100%; height: auto; clear: both; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-6384567588307613" data-adsbygoogle-status="done" style="display: block; margin: auto; background-color: transparent; height: 280px;" data-ad-status="filled"><div id="aswift_4_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 280px; width: 820px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;border:0;width:820px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="820" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(1).html" data-google-container-id="a!5" data-google-query-id="CKr1hPmEnPoCFb_w5wMdJOIPPQ" data-load-complete="true"></iframe></div></ins></div>
+<p>下面的程序展示了如何指定非布尔类型的选项。该程序是对第6个程序的重写，附加了一个选项用于指定你感兴趣的网络设备。<br>
+</p><div class="codetitle"><span><a data="85894" class="copybut" id="copybut85894"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code85894"><br>
+#!/usr/bin/env python<br>
+from __future__ import print_function<br>
+from collections import namedtuple<br>
+import argparse<p></p>
+<p>def netdevs(iface=None):<br>
+&nbsp;&nbsp;&nbsp; ''' RX and TX bytes for each of the network devices '''</p>
+<p>&nbsp;&nbsp;&nbsp; with open('/proc/net/dev') as f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; net_dump = f.readlines()<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; device_data={}<br>
+&nbsp;&nbsp;&nbsp; data = namedtuple('data',['rx','tx'])<br>
+&nbsp;&nbsp;&nbsp; for line in net_dump[2:]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; line = line.split(':')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if not iface:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line[0].strip() != 'lo':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; device_data[line[0].strip()] = data(float(line[1].split()[0])/(1024.0*1024.0), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float(line[1].split()[8])/(1024.0*1024.0))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if line[0].strip() == iface:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; device_data[line[0].strip()] = data(float(line[1].split()[0])/(1024.0*1024.0), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float(line[1].split()[8])/(1024.0*1024.0))&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; return device_data</p>
+<p>if __name__=='__main__':</p>
+<p>&nbsp;&nbsp;&nbsp; parser = argparse.ArgumentParser(description='Network Interface Usage Monitor')<br>
+&nbsp;&nbsp;&nbsp; parser.add_argument('-i','--interface', dest='iface',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; help='Network interface')</p>
+<p>&nbsp;&nbsp;&nbsp; args = parser.parse_args()</p>
+<p>&nbsp;&nbsp;&nbsp; netdevs = netdevs(iface = args.iface)<br>
+&nbsp;&nbsp;&nbsp; for dev in netdevs.keys():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print('{0}: {1} MiB {2} MiB'.format(dev, netdevs[dev].rx, netdevs[dev].tx))<br>
+</p></div><p></p>
+<p><br>
+当你不带任何参数执行程序的时候，程序的行为与之前的版本完全一致。然后，你也可以指定感兴趣的网络设备。例如：</p>
+<p></p><div class="codetitle"><span><a data="78417" class="copybut" id="copybut78417"><u>复制代码</u></a></span> 代码如下:</div><div class="codebody" id="code78417"><br>
+$ ./net_devs_2.py<p></p>
+<p>em1: 0.0 MiB 0.0 MiB<br>
+wlan0: 146.099492073 MiB 12.9737148285 MiB<br>
+virbr1: 0.0 MiB 0.0 MiB<br>
+virbr1-nic: 0.0 MiB 0.0 MiB</p>
+<p>$ ./net_devs_2.py&nbsp; --help<br>
+usage: net_devs_2.py [-h] [-i IFACE]</p>
+<p>Network Interface Usage Monitor</p>
+<p>optional arguments:<br>
+&nbsp; -h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; show this help message and exit<br>
+&nbsp; -i IFACE, --interface IFACE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Network interface</p>
+<p>$ ./net_devs_2.py&nbsp; -i wlan0<br>
+wlan0: 146.100307465 MiB 12.9777050018 MiB<br>
+</p></div><p></p>
+<p><strong>脚本的系统范围可用性</strong></p>
+<p>在本文的帮助下，你可能已经可以写一个或多个有用的脚本，就像其它linux命令一样，你想要每天都使用它们。最简单的方式是将脚本设置为可执行的，然后为脚本设置一个BASH别名。你也可以移除.py扩展名，然后将脚本放在诸如/usr/local/sbin这样的标准位置。</p>
+<p><strong>其它有用的标准库模组</strong></p>
+<p>除了本文中已经提到的标准库模组，还有很多其它有用的标准模组：subprocess、ConfigParser、readline和curses。</p>
+<p><strong>接下来做什么？</strong></p>
+<p>在这个阶段，依靠你自己使用Python的经验，探索Linux内部，你可以参考下面的任一方式。如果你曾经需要写很多shell脚本/命令流水线来探索Linux内部，那么试一下Python。如果你想要一个更简单的方式来编写执行很多任务的实用程序脚本，那么试一下Python。最后，如果你已经使用Python在Linux上别写其它目的的程序，那么试一下用Python探索Linux内部。</p>
+                            
+                            <div class="art_xg">
+                                <b>您可能感兴趣的文章:</b><ul><li><a href="https://www.jb51.net/article/52107.htm" title="使用 Python 获取 Linux 系统信息的代码" target="_blank">使用 Python 获取 Linux 系统信息的代码</a></li><li><a href="https://www.jb51.net/article/45716.htm" title="linux系统使用python获取cpu信息脚本分享" target="_blank">linux系统使用python获取cpu信息脚本分享</a></li><li><a href="https://www.jb51.net/article/45714.htm" title="linux系统使用python获取内存使用信息脚本分享" target="_blank">linux系统使用python获取内存使用信息脚本分享</a></li><li><a href="https://www.jb51.net/article/45164.htm" title="使用python获取CPU和内存信息的思路与实现(linux系统)" target="_blank">使用python获取CPU和内存信息的思路与实现(linux系统)</a></li><li><a href="https://www.jb51.net/article/197067.htm" title="python利用platform模块获取系统信息" target="_blank">python利用platform模块获取系统信息</a></li><li><a href="https://www.jb51.net/article/190974.htm" title="python获取系统内存占用信息的实例方法" target="_blank">python获取系统内存占用信息的实例方法</a></li><li><a href="https://www.jb51.net/article/100326.htm" title="Python脚本获取操作系统版本信息" target="_blank">Python脚本获取操作系统版本信息</a></li><li><a href="https://www.jb51.net/article/91752.htm" title="利用Python获取操作系统信息实例" target="_blank">利用Python获取操作系统信息实例</a></li><li><a href="https://www.jb51.net/article/197381.htm" title="python获取linux系统信息的三种方法" target="_blank">python获取linux系统信息的三种方法</a></li></ul>
+                            </div>
+
+                        </div>
+                        <!--endmain-->
+                        <div class="lbd_bot clearfix"><script async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(9).txt"></script><ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-6384567588307613" data-ad-slot="6445926239" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_2_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 280px; width: 820px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0;width:820px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="820" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(2).html" data-google-container-id="a!3" data-google-query-id="CILjjPmEnPoCFVL25wMdp3oE3w" data-load-complete="true"></iframe></div></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div id="ewm"><div class="jb51ewm"><div class="fl"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/jb51ewm.png"></div><div class="fr"><p>微信公众号搜索 “ <span>脚本之家</span> ” ，选择关注</p><p>程序猿的那些事、送书等活动等着你</p></div></div></div>
+                        <div class="tags clearfix">
+                            <i class="icon-tag"></i>
+                            <ul class="meta-tags">
+                                <li class="tag item"><a href="http://common.jb51.net/tag/Python/1.htm" target="_blank" title="搜索关于Python的文章" rel="nofollow">Python</a></li>
+<li class="tag item"><a href="http://common.jb51.net/tag/Linux%E7%B3%BB%E7%BB%9F/1.htm" target="_blank" title="搜索关于Linux系统的文章" rel="nofollow">Linux系统</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="lbd clearfix">
+                            <span id="art_down" class="jbTestPos"><div class="_282edgdqgmm"><iframe id="iframeu4846790_0" name="iframeu4846790_0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm.html" width="820" height="250" scrolling="no" frameborder="0"></iframe></div></span>
+                        </div>
+                        <div id="shoucang"></div>
+                        <div class="xgcomm clearfix">
+                            <h2>相关文章</h2>
+                            <ul><li class="lbd clearfix"><span id="art_xg" class="jbTestPos"><div class="_gbfvped10mp"><iframe id="iframeu4806172_0" name="iframeu4806172_0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(7).html" width="820" height="120" scrolling="no" frameborder="0"></iframe></div></span></li><li><div class="item-inner"><a href="https://www.jb51.net/article/201267.htm" title="python字符串拼接+和join的区别详解" class="img-wrap" target="_blank"> <img alt="python字符串拼接+和join的区别详解" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg0.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/201267.htm" title="python字符串拼接+和join的区别详解">python字符串拼接+和join的区别详解</a></p><div class="item-info"><div class="js">这篇文章主要给大家介绍了关于python字符串拼接+和join的区别的相关资料，文中通过示例代码介绍的非常详细，对大家的学习或者工作具有一定的参考学习价值，需要的朋友们下面随着小编来一起学习学习吧</div><span class="lbtn" style="float:right"> 2020-12-12 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/62104.htm" title="Python实现测试磁盘性能的方法" class="img-wrap" target="_blank"> <img alt="Python实现测试磁盘性能的方法" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg1.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/62104.htm" title="Python实现测试磁盘性能的方法">Python实现测试磁盘性能的方法</a></p><div class="item-info"><div class="js">这篇文章主要介绍了Python实现测试磁盘性能的方法,涉及Python对硬件的相关操作技巧,具有一定参考借鉴价值,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2015-03-03 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/214924.htm" title="Python中的xlrd模块使用整理" class="img-wrap" target="_blank"> <img alt="Python中的xlrd模块使用整理" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg2.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/214924.htm" title="Python中的xlrd模块使用整理">Python中的xlrd模块使用整理</a></p><div class="item-info"><div class="js">今天给大家带来的文章是关于Python的相关知识,文章围绕着xlrd模块的使用展开,文中有非常详细的介绍及代码示例,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2021-06-06 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/188927.htm" title="python退出循环的方法" class="img-wrap" target="_blank"> <img alt="python退出循环的方法" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg3.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/188927.htm" title="python退出循环的方法">python退出循环的方法</a></p><div class="item-info"><div class="js">在本篇文章里小编给大家整理的是关于python如何退出循环的相关知识点内容，需要的朋友们可以参考下。</div><span class="lbtn" style="float:right"> 2020-06-06 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/82267.htm" title="Python脚本简单实现打开默认浏览器登录人人和打开QQ的方法" class="img-wrap" target="_blank"> <img alt="Python脚本简单实现打开默认浏览器登录人人和打开QQ的方法" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg4.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/82267.htm" title="Python脚本简单实现打开默认浏览器登录人人和打开QQ的方法">Python脚本简单实现打开默认浏览器登录人人和打开QQ的方法</a></p><div class="item-info"><div class="js">这篇文章主要介绍了Python脚本简单实现打开默认浏览器登录人人和打开QQ的方法,涉及Python针对浏览器及应用程序的相关操作技巧,代码非常简单实用,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2016-04-04 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/213958.htm" title="python3中类的重点与难点:类属性和实例属性的区别说明" class="img-wrap" target="_blank"> <img alt="python3中类的重点与难点:类属性和实例属性的区别说明" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg5.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/213958.htm" title="python3中类的重点与难点:类属性和实例属性的区别说明">python3中类的重点与难点:类属性和实例属性的区别说明</a></p><div class="item-info"><div class="js">这篇文章主要介绍了python3中类的重点与难点:类属性和实例属性的区别说明，具有很好的参考价值，希望对大家有所帮助。如有错误或未考虑完全的地方，望不吝赐教</div><span class="lbtn" style="float:right"> 2021-06-06 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/188146.htm" title="python pymysql链接数据库查询结果转为Dataframe实例" class="img-wrap" target="_blank"> <img alt="python pymysql链接数据库查询结果转为Dataframe实例" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg6.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/188146.htm" title="python pymysql链接数据库查询结果转为Dataframe实例">python pymysql链接数据库查询结果转为Dataframe实例</a></p><div class="item-info"><div class="js">这篇文章主要介绍了python pymysql链接数据库查询结果转为Dataframe实例，具有很好的参考价值，希望对大家有所帮助。一起跟随小编过来看看吧</div><span class="lbtn" style="float:right"> 2020-06-06 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/200188.htm" title="Django vue前后端分离整合过程解析" class="img-wrap" target="_blank"> <img alt="Django vue前后端分离整合过程解析" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg7.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/200188.htm" title="Django vue前后端分离整合过程解析">Django vue前后端分离整合过程解析</a></p><div class="item-info"><div class="js">这篇文章主要介绍了Django vue前后端分离整合过程解析,文中通过示例代码介绍的非常详细，对大家的学习或者工作具有一定的参考学习价值,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2020-11-11 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/175823.htm" title="Python 词典(Dict) 加载与保存示例" class="img-wrap" target="_blank"> <img alt="Python 词典(Dict) 加载与保存示例" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg8.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/175823.htm" title="Python 词典(Dict) 加载与保存示例">Python 词典(Dict) 加载与保存示例</a></p><div class="item-info"><div class="js">今天小编就为大家分享一篇Python 词典(Dict) 加载与保存示例，具有很好的参考价值，希望对大家有所帮助。一起跟随小编过来看看吧</div><span class="lbtn" style="float:right"> 2019-12-12 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/167041.htm" title="运用PyTorch动手搭建一个共享单车预测器" class="img-wrap" target="_blank"> <img alt="运用PyTorch动手搭建一个共享单车预测器" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bcimg9.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/167041.htm" title="运用PyTorch动手搭建一个共享单车预测器">运用PyTorch动手搭建一个共享单车预测器</a></p><div class="item-info"><div class="js">这篇文章主要介绍了运用PyTorch动手搭建一个共享单车预测器，本文给大家介绍的非常详细，具有一定的参考借鉴价值,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2019-08-08 </span></div></div></div></div></li>
+</ul>
+                        </div>
+                        <div class="lbd clearfix mt5">
+                            <span id="art_down2" class="jbTestPos"><div class="_c4j04cuyafm"><iframe id="iframeu5010600_0" name="iframeu5010600_0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(8).html" width="820" height="120" scrolling="no" frameborder="0"></iframe></div></span>
+                        </div>
+                        <a href="https://www.jb51.net/article/52058.htm#comments"></a>
+                        <div id="comments">
+                            <h2>最新评论</h2>
+                            <div class="pd5">
+                                <div id="SOHUCS" sid="art_52058"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--endborder-->
+                </div>
+                <!--end fl-->
+
+                <div class="main-right" style="height: auto !important;">
+                    <div id="sidebar-right" style="height: auto !important;">
+                        <div class="r300 clearfix"><span id="side_up" class="jbTestPos"><div class="_0drj58xtnjak"><iframe id="iframeu6561626_0" name="iframeu6561626_0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(9).html" width="300" height="250" scrolling="no" frameborder="0"></iframe></div></span></div>
+                        <div class="sidebox-recomm"></div>
+                        <div class="r300 clearfix"><div class="blank10"></div><a href="https://www.hncloud.com/activity_2022_815.html?p=jb51&amp;815" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/hncloud300.gif" alt="" width="300" height="100"><span class="tipsa_d">广告　商业广告，理性选择</span></a></div>
+                        <div class="sidebox bor-blue" style="height: auto !important;">
+                            <div class="bor-default pb10">
+                                <h4 class="blue">大家感兴趣的内容</h4>
+                                <ul class="newsList newList-in">
+                                    <li><em class="no1">1</em><a href="https://www.jb51.net/article/926.htm" title="Python入门教程 超详细1小时学会Python" target="_blank">Python入门教程 超详细1小时学会Python</a></li><li><em class="no2">2</em><a href="https://www.jb51.net/article/178076.htm" title="Pycharm 2020最新永久激活码（附最新激活码和插件）" target="_blank">Pycharm 2020最新永久激活码（附最新激活码和插件）</a></li><li><em class="no3">3</em><a href="https://www.jb51.net/article/47986.htm" title="Python 元组(Tuple)操作详解" target="_blank">Python 元组(Tuple)操作详解</a></li><li><em class="no4">4</em><a href="https://www.jb51.net/article/47978.htm" title="Python 列表(List)操作方法详解" target="_blank">Python 列表(List)操作方法详解</a></li><li><em class="no5">5</em><a href="https://www.jb51.net/article/47990.htm" title="Python 字典(Dictionary)操作详解" target="_blank">Python 字典(Dictionary)操作详解</a></li><li><em class="no6">6</em><a href="https://www.jb51.net/article/178050.htm" title="Pycharm 2020年最新激活码（亲测有效）" target="_blank">Pycharm 2020年最新激活码（亲测有效）</a></li><li><em class="no7">7</em><a href="https://www.jb51.net/article/37287.htm" title="python strip()函数 介绍" target="_blank">python strip()函数 介绍</a></li><li><em class="no8">8</em><a href="https://www.jb51.net/article/50689.htm" title="pycharm 使用心得（一）安装和首次使用" target="_blank">pycharm 使用心得（一）安装和首次使用</a></li><li><em class="no9">9</em><a href="https://www.jb51.net/article/60510.htm" title="python中使用xlrd、xlwt操作excel表格详解" target="_blank">python中使用xlrd、xlwt操作excel表格详解</a></li><li><em class="no10">10</em><a href="https://www.jb51.net/article/26543.htm" title="python 中文乱码问题深入分析" target="_blank">python 中文乱码问题深入分析</a></li>
+                                </ul>
+                            </div><div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-6384567588307613" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 600px;" data-ad-status="filled"><div id="aswift_5_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_5" name="aswift_5" style="left:0;position:absolute;top:0;border:0;width:300px;height:600px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(3).html" data-google-container-id="a!6" data-google-query-id="CIqm6vaEnPoCFend5wMd_TgJ4w" data-load-complete="true"></iframe></div></ins></div>
+                        </div>
+                        <div class="r300 clearfix mt10"><span id="idctu" class="jbTestPos"><div class="_3qntp77k9rt"><iframe id="iframeu6390620_0" name="iframeu6390620_0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(10).html" width="300" height="250" scrolling="no" frameborder="0"></iframe></div><a href="https://www.henghost.com/act/2021newyear.html?jbzj" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/henghost300.png" width="300" height="100"><span class="tipsa_d">广告　商业广告，理性选择</span></a><div class="blank10"></div><a href="https://www.50vm.com/server.html?pg=34" target="_blank" class="tipsa_ds"><img alt="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/99idc300.jpg" width="300" height="100"><span class="tipsa_d">广告　商业广告，理性选择</span></a></span></div><div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-6384567588307613" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 250px;" data-ad-status="filled"><div id="aswift_6_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 250px; width: 330px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_6" name="aswift_6" style="left:0;position:absolute;top:0;border:0;width:330px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="330" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(4).html" data-google-container-id="a!7" data-google-query-id="CLme7vaEnPoCFSvo5wMdnqkCLA" data-load-complete="true"></iframe></div></ins></div>
+                        <div class="sidebox bor-blue" style="height: auto !important;">
+                            <div class="bor-default pb10">
+                                <h4 class="blue">最近更新的内容</h4>
+                                <ul class="newsListA">
+                                    <li><a href="https://www.jb51.net/article/200142.htm" title="Python并发爬虫常用实现方法解析" target="_blank">Python并发爬虫常用实现方法解析</a></li><li><a href="https://www.jb51.net/article/148780.htm" title="python得到qq句柄,并显示在前台的方法" target="_blank">python得到qq句柄,并显示在前台的方法</a></li><li><a href="https://www.jb51.net/article/177726.htm" title="Python实现银行账户资金交易管理系统" target="_blank">Python实现银行账户资金交易管理系统</a></li><li><a href="https://www.jb51.net/article/189451.htm" title="利用PyTorch实现VGG16教程" target="_blank">利用PyTorch实现VGG16教程</a></li><li><a href="https://www.jb51.net/article/213507.htm" title="Python趣味爬虫之用Python实现智慧校园一键评教" target="_blank">Python趣味爬虫之用Python实现智慧校园一键评教</a></li><li><a href="https://www.jb51.net/article/63731.htm" title="使用Python操作Elasticsearch数据索引的教程" target="_blank">使用Python操作Elasticsearch数据索引的教程</a></li><li><a href="https://www.jb51.net/article/188636.htm" title="pandas DataFrame运算的实现" target="_blank">pandas DataFrame运算的实现</a></li><li><a href="https://www.jb51.net/article/161261.htm" title="python语言元素知识点详解" target="_blank">python语言元素知识点详解</a></li><li><a href="https://www.jb51.net/article/143146.htm" title="Python实现朴素贝叶斯分类器的方法详解" target="_blank">Python实现朴素贝叶斯分类器的方法详解</a></li><li><a href="https://www.jb51.net/article/119289.htm" title="Python编程之string相关操作实例详解" target="_blank">Python编程之string相关操作实例详解</a></li>
+                                </ul>
+                            </div><div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-6384567588307613" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 600px;" data-ad-status="filled"><div id="aswift_7_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_7" name="aswift_7" style="left:0;position:absolute;top:0;border:0;width:300px;height:600px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(5).html" data-google-container-id="a!8" data-google-query-id="CKbq7vaEnPoCFWTk5wMdK8oAKQ" data-load-complete="true"></iframe></div></ins></div>
+                        </div>
+                        <div class="r300 clearfix mt10"><div class="idc3"><a href="http://tools.jb51.net/" target="_blank"><h1>在线工具</h1><span>代码格式化等</span> </a><a href="https://www.jb51.net/s/idc/" target="_blank"><h1>高防主机</h1><span>600G 防护</span> </a><a href="http://www.33ip.com/" target="_blank"><h1>枫信科技</h1><span>IDC服务商</span> </a></div></div>
+                        <div class="sidebox bor-blue" style="height: auto !important;">
+                            <div class="bor-default pb10">
+                                <h4 class="blue">常用在线小工具</h4>
+                                <ul class="newsListA"><li><a href="http://tools.jb51.net/code/css" target="_blank"><font color="red">CSS代码工具</font></a></li><li><a href="http://tools.jb51.net/code/js" target="_blank"><font color="red">JavaScript代码格式化工具</font></a></li><li><a href="http://tools.jb51.net/code/xmlformat" target="_blank">在线XML格式化/压缩工具</a></li><li><a href="http://tools.jb51.net/code/phpformat" target="_blank"><font color="red">php代码在线格式化美化工具</font></a></li><li><a href="http://tools.jb51.net/code/sqlcodeformat" target="_blank">sql代码在线格式化美化工具</a></li><li><a href="http://tools.jb51.net/transcoding/html_transcode" target="_blank">在线HTML转义/反转义工具</a></li><li><a href="http://tools.jb51.net/code/json" target="_blank">在线JSON代码检验/检验/美化/格式化</a></li><li><a href="http://tools.jb51.net/regex/javascript" target="_blank">JavaScript正则在线测试工具</a></li><li><a href="http://tools.jb51.net/transcoding/jb51qrcode" target="_blank">在线生成二维码工具(加强版)</a></li><li><a href="http://tools.jb51.net/" target="_blank">更多在线工具</a></li></ul>
+                            </div><div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-6384567588307613" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 600px;" data-ad-status="filled"><div id="aswift_8_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_8" name="aswift_8" style="left:0;position:absolute;top:0;border:0;width:300px;height:600px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(6).html" data-google-container-id="a!9" data-google-query-id="CIuo7_eEnPoCFRrM5wMdJT0AEQ" data-load-complete="true"></iframe></div></ins></div>
+                        </div>
+                        <div class="r300 clearfix mt10"><a href="http://www.tuidc.com/indexhd.html" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/tengyou300.gif" width="300" height="100"><span class="tipsa_d">广告　商业广告，理性选择</span></a><div class="blank10"></div><a href="https://www.yiyangidc.com/" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/yyqz300.gif" alt="服务器" width="300" height="100"><span class="tipsa_d">广告　商业广告，理性选择</span></a><div class="blank10"></div><a href="http://www.boluoyun.com/" target="_blank" class="tipsa_ds"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/bly300.jpg" alt="云服务器" width="300" height="100"><span class="tipsa_d">广告　商业广告，理性选择</span></a></div>
+                        <div class="mt10 rFixedBox" style="position: static; top: 0px;">
+                            <div class="r300 clearfix"><script async="" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/f(10).txt" crossorigin="anonymous" data-checked-head="true"></script><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-6384567588307613" data-ad-slot="6500564943" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_3_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 250px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;border:0;width:300px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(7).html" data-google-container-id="a!4" data-google-query-id="COvxrvaEnPoCFXTh5wMdKRYG3A" data-load-complete="true"></iframe></div></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                            <div class="r300 clearfix mt10">
+                                <span id="rbbd" class="jbTestPos"><div class="_tuhdczzeu1s"><iframe id="iframeu4519613_0" name="iframeu4519613_0" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/iczm(11).html" width="300" height="250" scrolling="no" frameborder="0"></iframe></div></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end fr-->
+            </div>
+        <div style="float:left;position: relative;"><div id="right-share" class="lefts" style="display: none;">
+            <div class="right-share jb-share" id="jb-share">
+                <a class="rshare-weixin" title="">微信</a>
+                <a rel="nofollow" class="rshare-qzone" target="_blank" href="http://tougao.jb51.net/" title="投稿">投稿</a>
+                <a rel="nofollow" class="rshare-sqq" target="_blank" href="https://task.jb51.net/" title="脚本任务">脚本任务</a>
+                <a rel="nofollow" class="rshare-tsina" target="_blank" href="http://tools.jb51.net/" title="在线工具">在线工具</a>
+            </div>
+            <a class="rshare-top" onclick="javascript:;"></a>
+            <div id="weixin-code" class="hide">
+                <div class="popup_weixin_head">
+                    <p>关注微信公众号</p>
+                    <div id="code"><img src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/erwm.jpg" alt="扫一扫" width="100" height="100"></div>
+                </div>
+            </div>
+        </div></div></div>
+        <!--share start-->
+        
+        <!--share end-->
+        <!-- 目录容器 -->
+        <div class="AutoCatelog">
+            <div class="AutoCatelogLlist" id="CatelogList" style="display:none"></div>
+        </div>
+    </div>
+    <!--end content-->
+    <div id="footer">
+        <div class="footer-bottom">
+            <p>
+                <a rel="nofollow" href="https://www.jb51.net/about.htm" target="_blank">关于我们</a> -
+                <a rel="nofollow" href="https://www.jb51.net/support.htm" target="_blank">广告合作</a> -
+                <a rel="nofollow" href="https://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -
+                <a rel="nofollow" href="https://www.jb51.net/sm.htm" target="_blank">免责声明</a> -
+                <a rel="nofollow" href="https://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> -
+                <a rel="nofollow" href="tencent://message/?uin=461478385&amp;Site=https://www.jb51.net" target="_blank">投诉建议</a> -
+                <a rel="nofollow" href="https://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+            </p>
+            <p>©CopyRight 2006-2021 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+        </div>
+    </div>
+    <!--end footer-->
+    <script type="text/javascript">
+        var ourl = "";
+    </script>
+        <link type="text/css" rel="stylesheet" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/shCore.css">
+    <link type="text/css" rel="Stylesheet" href="./使用Python获取Linux系统的各种信息_python_脚本之家_files/shThemeDefault.css">
+    <script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/shHighlighter.js.download"></script>
+    <script type="text/javascript">
+        /*更多导航*/
+        $("#nav p").hover(function() {
+            $(this).addClass("hover")
+        }, function() {
+            $(this).removeClass("hover")
+        });
+        if (top.location != self.location) top.location = self.location;
+        var varwindow = $(window);
+        $('#content').find('img').each(function() {
+            var img = this;
+            if (img.width >= 800 && !$(this).hasClass("nohref")) {
+                img.style.width = "800px";
+                img.style.height = "auto";
+            }
+        });
+
+        function sideFixed() {
+            var scrolltop = document.body.scrollTop || document.documentElement.scrollTop;
+            if (ww > 440) {
+                if (550 <= scrolltop){
+                    $('#right-share').slideDown();
+                } else {
+                    $('#right-share').slideUp();
+                }
+                if(suoyin=='ok'&&typeof cataloguetop=='number'){
+                    if (cataloguetop <= scrolltop){
+                        //$('#navCategory').css('visibility','hidden');
+                        $('#CatelogList').fadeIn();
+                    } else {
+                        //$('#navCategory').css('visibility','visible');
+                        $('#CatelogList').fadeOut();
+                    }
+                }
+            }
+        }
+        var ww = varwindow.width();
+        
+        $('#right-share').addClass('lefts');
+        if(suoyin=='ok'){
+            $(window).resize(function() {
+                show_suoyin();
+            });
+            var cataloguetop=$('#navCategory').offset().top+$('#navCategory').outerHeight();
+            show_suoyin();
+            $(function(){
+                cataloguetop=$('#navCategory').offset().top+$('#navCategory').outerHeight();
+            })
+        }
+        
+        $(window).scroll(function() {
+            //rFixedBox跟随滚动
+            var h = varwindow.height();
+            var top = varwindow.scrollTop();
+            var rFixedBox = $('.rFixedBox').prev().offset();
+            var fixedTop = rFixedBox.top;
+
+            if (top >= fixedTop + 330) {
+                var h1 = parseInt($('#content').children('.main').height());
+                $('.rFixedBox').css({
+                    'position': 'fixed',
+                    'top': 0
+                });
+            } else {
+                $('.rFixedBox').css({
+                    'position': 'static',
+                    'top': 0
+                });
+            }
+            /* return true;*/
+
+            /*右侧快捷菜单*/
+            sideFixed();
+        });
+        $(window).scroll();
+        
+        $('.rshare-weixin').hover(function() {
+            $('#weixin-code').removeClass('hide');
+        }, function() {
+            $('#weixin-code').addClass('hide');
+        });
+        /*二维码*/
+        $('#right-share .rshare-top').on('click', function() {
+            $('html,body').animate({
+                'scrollTop': 0
+            }, 500);
+        });
+        
+
+        function show_suoyin() {
+            var vww = 0;
+            vww = varwindow.width();
+            
+            if (suoyin == "ok") {
+                if (vww > 1600) {
+                    var catell = document.getElementById("CatelogList");
+                    
+                    if (vww < 1920) {
+                        catell.style.width = (((vww - 1200) / 2) - 20) + "px";
+                    } else {
+                        catell.style.width = "340px";
+                    }
+
+                    if (!window.suoyinobj) {
+                        window.suoyinobj = new katelog({
+                            contentEl: 'content',
+                            catelogEl: 'CatelogList',
+                            linkClass: 'AutoCatelogLink',
+                            linkActiveClass: 'CatelogActive',
+                            supplyTop: 20,
+                            selector: ['h2', 'h3', 'h4'],
+                            active: function(el) {
+                                //console.log(el);
+                            }
+                        });
+                    }
+                } else {
+                    window.suoyinobj = null;
+                    //GenerateContentList();
+                }
+            }
+        }
+
+        SyntaxHighlighter.autoloader(
+            'applescript            /jslib/syntaxhighlighter/scripts2022/shBrushAppleScript.js',
+            'actionscript3 as3      /jslib/syntaxhighlighter/scripts2022/shBrushAS3.js',
+            'bash shell             /jslib/syntaxhighlighter/scripts2022/shBrushBash.js',
+            'coldfusion cf          /jslib/syntaxhighlighter/scripts2022/shBrushColdFusion.js',
+            'cpp c                  /jslib/syntaxhighlighter/scripts2022/shBrushCpp.js',
+            'obj-c objc             /jslib/syntaxhighlighter/scripts2022/shBrushObjC.js',
+            'c# c-sharp csharp      /jslib/syntaxhighlighter/scripts2022/shBrushCSharp.js',
+            'css                    /jslib/syntaxhighlighter/scripts2022/shBrushCss.js',
+            'delphi pascal          /jslib/syntaxhighlighter/scripts2022/shBrushDelphi.js',
+            'diff patch pas         /jslib/syntaxhighlighter/scripts2022/shBrushDiff.js',
+            'erl erlang             /jslib/syntaxhighlighter/scripts2022/shBrushErlang.js',
+            'groovy                 /jslib/syntaxhighlighter/scripts2022/shBrushGroovy.js',
+            'haxe hx                /jslib/syntaxhighlighter/scripts2022/shBrushHaxe.js',
+            'java                   /jslib/syntaxhighlighter/scripts2022/shBrushJava.js',
+            'jfx javafx             /jslib/syntaxhighlighter/scripts2022/shBrushJavaFX.js',
+            'js jscript javascript  /jslib/syntaxhighlighter/scripts2022/shBrushJScript.js',
+            'perl pl                /jslib/syntaxhighlighter/scripts2022/shBrushPerl.js',
+            'php                    /jslib/syntaxhighlighter/scripts2022/shBrushPhp.js',
+            'text plain             /jslib/syntaxhighlighter/scripts2022/shBrushPlain.js',
+            'py python              /jslib/syntaxhighlighter/scripts2022/shBrushPython.js',
+            'ruby rails ror rb      /jslib/syntaxhighlighter/scripts2022/shBrushRuby.js',
+            'scala                  /jslib/syntaxhighlighter/scripts2022/shBrushScala.js',
+            'sql                    /jslib/syntaxhighlighter/scripts2022/shBrushSql.js',
+            'vb vbnet               /jslib/syntaxhighlighter/scripts2022/shBrushVb.js',
+            'ps powershell          /jslib/syntaxhighlighter/scripts2022/shBrushPowerShell.js',
+            'xml xhtml xslt html    /jslib/syntaxhighlighter/scripts2022/shBrushXml.js',
+			'go golang				/jslib/syntaxhighlighter/scripts2022/shBrushGo.js',
+			'json					/jslib/syntaxhighlighter/scripts2022/shBrushJSON.js',
+			'yml yaml				/jslib/syntaxhighlighter/scripts2022/shBrushYaml.js'
+        );
+        SyntaxHighlighter.all();
+        (function() {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            } else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+<script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/arc2019.js.download"></script>
+<div id="tongji">
+<script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/tongji.js.download"></script><script async="" defer="" data-website-id="4b184fb7-20a6-45ef-b5b9-dbf8ecc5400e" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/umami.js.download"></script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/stat.php" language="JavaScript"></script>
+</div>
+<script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/viewer.min.js.download"></script>
+<script type="text/javascript">
+if ('undefined' == typeof(window.Viewer)) {
+        document.write(unescape("%3Cscr"+"ipt src='/skin/js/viewer.min.js' type='text/javascript'%3E%3C/scr"+"ipt%3E"));
+    }
+var viewer = new Viewer(document.getElementById('content'));
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba":"https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<scr'+'ipt src="' + src + '" id="sozz"><\/scr'+'ipt>');
+})();
+</script><script src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/11.0.1.js.download" id="sozz"></script><script charset="utf-8" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ab77b6ea7f3fbf79.js.download"></script>
+    <script type="text/javascript" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/pl.asp.download"></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+            "@id": "https://www.jb51.net/article/52058.htm",
+            "appid": "1549322409310619",
+            "title": "使用Python获取Linux系统的各种信息",
+            "description": "这篇文章主要介绍了使用Python获取Linux系统的各种信息,例如系统类型、CPU信息、内存信息、块设备等,需要的朋友可以参考下",
+            "pubDate": "2014-07-10T10:55:04",
+            "upDate": "2014-07-10T10:55:04"
+        }
+
+    </script>
+
+
+
+<script id="bs-cm" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/cm.js.download" async="async" defer="defer"></script><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/ads(8).html" data-google-container-id="a!1" data-load-complete="true"></iframe></div></ins><iframe src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body><iframe id="google_esf" name="google_esf" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/zrt_lookup.html" style="display: none;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important; width: 100vw !important; height: 100vh !important; inset: 0px auto auto 0px !important; clear: none !important; float: none !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; position: fixed !important; vertical-align: baseline !important; visibility: visible !important; z-index: 2147483647 !important; background: transparent !important;" aria-hidden="true" data-ad-status="filled" data-vignette-loaded="true"><div id="aswift_9_host" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none !important; height: 100vh !important; width: 100vw !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: inline-block !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><iframe id="aswift_9" name="aswift_9" style="width: 100vw !important; height: 100vh !important; inset: 0px auto auto 0px !important; position: absolute !important; clear: none !important; display: inline !important; float: none !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; vertical-align: baseline !important; visibility: visible !important; z-index: auto !important;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="" height="" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./使用Python获取Linux系统的各种信息_python_脚本之家_files/zrt_lookup(1).html" data-google-container-id="a!a" data-google-query-id="CN7eqfaEnPoCFZSZ2AUdLXABZg" data-load-complete="true"></iframe></div></ins></html>
